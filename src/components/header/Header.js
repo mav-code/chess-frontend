@@ -1,38 +1,44 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
-
-//random comment so I can commit
+import { Link, withRouter } from 'react-router-dom'
+import LoginBlock from './LoginBlock.js'
 
 class Header extends React.Component {
 
 
+    newGame = (event) => {
+        this.props.history.push(`/new/`)
+    }
+
+    handleLogout = () => {
+        fetch("http://localhost:3000/logout", {
+          method: "POST",
+          credentials: "include"
+        })
+          .then(r => r.json())
+          .then(() => {
+            this.props.handleUpdateCurrentUser(null)
+          })
+      }
+
     render() {
+        let welcome
+        if(this.props.currentUser){
+            welcome = ["Welcome!", <button onClick={this.handleLogout}>Logout {this.props.currentUser.username}</button>]
+        } else {
+            welcome = <LoginBlock handleUpdateCurrentUser={this.props.handleUpdateCurrentUser} currentUser={this.props.currentUser} />
+        }
       
       return (
         <header>
-            This is the header
-        {/* <div className="actions">
-          {this.props.currentUser ? (
-            <>
-            <Link to='/profile'>
-              <button>Profile</button>
+            <Link to="/">
+                  LOGO
             </Link>
-            <button onClick={this.handleLogout}>Logout {this.props.currentUser.username}</button>
-            </>
-          ) : (
-              <>
-                <Link to="/login">
-                  <button>Login</button>
-                </Link>
-                <Link to="/signup">
-                  <button>Sign Up</button>
-                </Link>
-              </>
-            )}
-        </div> */}
+            <button onClick={this.newGame}>Create New Table</button>
+            {welcome}
+
       </header>
       )
     }
 }
 
-export default Header;
+export default withRouter(Header);

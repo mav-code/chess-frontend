@@ -17,6 +17,7 @@ class Header extends React.Component {
           .then(r => r.json())
           .then(() => {
             this.props.handleUpdateCurrentUser(null)
+            this.props.history.push("/")
           })
       }
 

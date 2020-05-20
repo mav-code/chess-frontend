@@ -1,6 +1,7 @@
 import React from 'react'
-import {Route, Switch, withRouter} from 'react-router-dom'
-import { Link } from 'react-router-dom'
+// will I need route, switch, link?
+import {withRouter} from 'react-router-dom'
+
 
 class GameListing extends React.Component {
 

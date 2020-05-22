@@ -8,15 +8,18 @@ import Board from './Board.js'
 class NewGameContainer extends React.Component {
 
 state = {
+    name: `New Game`,
+    pgn: ``,
     fen: ['R@h1', 'P@f2', 'q@d8', 'R@a1', 'P@a2', 'P@c2', 'b@c8', 'p@d7', 'Q@d1', 'n@g8'],
-    whiteplayer: ``,
-    blackplayer: ``
+    whiteplayer_id: ``,
+    blackplayer_id: ``,
+    started: false
 }
 
 componentDidMount(){
     this.setState({
         fen: ["R@a1", "P@a2", "p@a7", "r@a8", "N@b1", "P@b2", "p@b7", "n@b8", "B@c1", "P@c2", "p@c7", "b@c8", "Q@d1", "P@d2", "p@d7", "q@d8", "K@e1", "P@e2", "p@e7", "k@e8", "B@f1", "P@f2", "p@f7", "b@f8", "N@g1", "P@g2", "p@g7", "n@g8", "R@h1", "P@h2", "p@h7", "r@h8"],
-        whiteplayer: this.props.currentUser.id
+        whiteplayer_id: this.props.currentUser.id
       })
 }
 
@@ -27,14 +30,17 @@ toggleColor() {
     if (checkBox.checked == true){
       black.style.display = "block";
       white.style.display = "none";
-    // working here right now
-      //   this.setState({
-    //       whiteplayer: ``
-    //       blackplayer
-    //   })
+        this.setState({
+          whiteplayer_id: ``,
+          blackplayer_id: this.props.currentUser.id
+      })
   } else {
       white.style.display = "block";
       black.style.display = "none";
+      this.setState({
+        whiteplayer_id: this.props.currentUser.id,
+        blackplayer_id: ``
+    })
   }
   }
 
@@ -61,11 +67,8 @@ toggleColor() {
         body: JSON.stringify(this.state)
       })
         .then(r => r.json())
-        .then(newPost => {
-          console.log(newPost)
-          this.setState(initialState)
-          this.props.renderNewPost(newPost)
-          this.props.showPost(newPost.id)
+        .then(newGame => {
+          console.log("newGame", newGame)
         })
     }
 

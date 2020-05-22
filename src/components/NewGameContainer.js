@@ -55,9 +55,33 @@ toggleColor() {
         fen: filtered
     })}
 
+    cancelTable= () => {
+        console.log("this.props.games", this.props.games)
+        console.log("this.props.currentUser", this.props.currentUser)
+        const thisGame = this.props.currentUser.games.filter(game => !(game.whitePlayer && game.blackPlayer))
+        console.log("in cancel", thisGame)
+        thisGame.forEach((game) =>
+            {fetch(`http://localhost:3000/games` + `/` + game.id, {
+                method: "DELETE"
+            })
+    .then(r => r.json())
+    .then(function (response) {
+        if (!response.ok) {
+            return Promise.reject('some reason');
+        }
+    
+        return response.json();
+    
+    })
+    // .then(json => {return json})
+    })}
+    
+    
     createTable = () => {
         console.log("submitting game")
-  
+        document.getElementById("create").disabled = true
+        const waitText = document.getElementById("waiting")
+        waitText.style.display = "block"
       fetch(`http://localhost:3000/games`, {
         method: "POST",
         headers: {
@@ -87,7 +111,11 @@ toggleColor() {
             </label>
             <p id="black">I want to play as black</p>
             <p id="white">I want to play as white</p>
-            <button onClick={this.createTable}>Create Table</button>
+            <button id="create" onClick={this.createTable}>Create Table</button>
+            <div id="waiting">
+            <button onClick={this.cancelTable}>Cancel</button>
+            <p>Waiting for someone to join...</p>
+            </div>
           </div>
           
         )

@@ -44,7 +44,7 @@ class App extends React.Component {
     <main>
       <Switch>
         <Route exact path='/' render={(routeProps) => <Lobby games={this.state.games} {...routeProps} />} />
-        <Route exact path='/new' render={(routeProps) => <NewGameContainer currentUser={this.state.currentUser} {...routeProps} />} />
+        <Route exact path='/new' render={(routeProps) => <NewGameContainer currentUser={this.state.currentUser} games={this.state.games}{...routeProps} />} />
         <Route exact path='/signup' render={(routeProps) => <SignupForm handleUpdateCurrentUser={this.handleUpdateCurrentUser} {...routeProps} />} />
         {/* <Route path='/boards' render={(routeProps) => <PostContainer posts={this.state.posts} {...routeProps} renderNewPost={this.renderNewPost} currentUser={this.state.currentUser}  /> } />
         <Route path='/posts' render={(routeProps) => <CommentContainer posts={this.state.posts} {...routeProps} currentUser={this.state.currentUser} />} />

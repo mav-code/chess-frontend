@@ -43,12 +43,12 @@ class LoginForm extends React.Component {
       const { username, password } = this.state
 
       return (
-        <div className="smallform">
+        <div class="rightalign" className="smallform">
         <form onSubmit={this.handleSubmit}>
-          <label>Username:</label>
-          <input type="text" name="username" onChange={this.handleInputChange} value={username} />
-          <label>Password:</label>
-          <input type="password" name="password" onChange={this.handleInputChange} value={password} />
+          <label>Username:</label><br/>
+          <input type="text" name="username" onChange={this.handleInputChange} value={username} /><br/>
+          <label>Password:</label><br/>
+          <input type="password" name="password" onChange={this.handleInputChange} value={password} /><br/>
           <input type="submit" value="Login" />
         </form>
       </div>

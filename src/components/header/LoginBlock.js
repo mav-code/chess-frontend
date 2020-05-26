@@ -10,7 +10,7 @@ class LoginBlock extends React.Component {
 
     toggleLogin = (event) => {
       const login = document.querySelector(".smallform")
-      if (login.style.display === "none") {
+      if (login.style.display !== "block") {
         login.style.display = "block";
         } else {
         login.style.display = "none";
@@ -32,13 +32,12 @@ class LoginBlock extends React.Component {
       
       return (
             <>
-            
-            <button onClick={this.toggleLogin}>Log in</button>
-            <LoginForm handleUpdateCurrentUser={this.props.handleUpdateCurrentUser} />
-            <Link to="/signup">
-                  <button>Sign Up</button>
-            </Link>
-                </>
+              <Link to="/signup">
+              <button class="rightalign">Sign Up</button>
+              </Link>
+              <button  class="rightalign" onClick={this.toggleLogin}>Log in</button>
+              <LoginForm handleUpdateCurrentUser={this.props.handleUpdateCurrentUser} />
+            </>
 
         /* <div className="actions">
           {this.props.currentUser ? (

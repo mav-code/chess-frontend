@@ -8,7 +8,7 @@ import Board from './Board.js'
 class NewGameContainer extends React.Component {
 
 state = {
-    name: `New Game`,
+    name: `Table Name`,
     pgn: ``,
     fen: ['R@h1', 'P@f2', 'q@d8', 'R@a1', 'P@a2', 'P@c2', 'b@c8', 'p@d7', 'Q@d1', 'n@g8'],
     whiteplayer_id: ``,
@@ -100,12 +100,16 @@ toggleColor = () => {
         })
     }
 
+    handleNameChange(event) {
+      this.setState({name: event.target.value});
+    }
+
 
     render() {
         console.log("in new game container", this.props.currentUser)
         return (
           <div class="gamesetup">
-            New Game
+            <input type="text" value={this.state.name} onChange={this.handleNameChange} />
             <br></br>
             Edit the Board:
             <Board onMovePiece={this.onMovePiece} pieces={this.state.fen}/>

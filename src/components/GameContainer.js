@@ -1,8 +1,14 @@
 import React from 'react'
 import { withRouter } from "react-router"
 import Board from './Board.js'
+import consumer from '../cable'
+
+console.log("consumer", consumer)
+
 
 class GameContainer extends React.Component {
+
+    
 
     state = {
         name: `New Game`,
@@ -10,7 +16,33 @@ class GameContainer extends React.Component {
         fen: [],
         whiteplayer_id: ``,
         blackplayer_id: ``,
-        started: true
+        started: true,
+        id: 0
+    }
+
+    componentDidUpdate(){
+        consumer.subscriptions.create({
+            channel: "LobbyChannel",
+            id: this.state.id
+          }, {
+            connected: () => console.log("connected"),
+            disconnected: () => console.log("disconnected"),
+            received: data => {
+              console.log("received data:", data)
+              let fixedFen = data
+                let fix2 = fixedFen.replace("[", "").replace("]", "").replace(/,/g, "").replace(/"/g, "")
+                console.log("fix2", fix2)
+                let realFixedFen
+                if(fix2.includes(" ")){realFixedFen = fix2.split(' ')
+                } else {realFixedFen = this.splitN(fix2, 4)} 
+                console.log("realFixedFen", realFixedFen)
+                console.log(typeof realFixedFen)
+              this.setState({
+                  fen: realFixedFen
+              })
+
+            },
+          })
     }
 
     splitN(s, n) {
@@ -38,7 +70,8 @@ class GameContainer extends React.Component {
             name: thisGame.name,
             fen: realFixedFen,
             whiteplayer_id: thisGame.whiteplayer_id,
-            blackplayer_id: thisGame.blackplayer_id
+            blackplayer_id: thisGame.blackplayer_id,
+            id: thisGame.id
         })
         console.log("state", this.state)
     }

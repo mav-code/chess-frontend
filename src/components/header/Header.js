@@ -24,7 +24,7 @@ class Header extends React.Component {
     render() {
         let welcome
         if(this.props.currentUser){
-            welcome = ["Welcome!", <button onClick={this.handleLogout}>Logout {this.props.currentUser.username}</button>]
+            welcome = [<div id="right"> Welcome! Join or create a table <button class="rightalign" onClick={this.handleLogout}>Logout {this.props.currentUser.username}</button></div>]
         } else {
             welcome = <LoginBlock handleUpdateCurrentUser={this.props.handleUpdateCurrentUser} currentUser={this.props.currentUser} />
         }
@@ -32,9 +32,10 @@ class Header extends React.Component {
       return (
         <header>
             <Link to="/">
-                  LOGO
+            <img id="logo" class="icon" src={process.env.PUBLIC_URL + '/stolenlogo.png'} />
+            <h4 class="pagetitle">Sandbox Chess</h4>
             </Link>
-            <button onClick={this.newGame}>Create New Table</button>
+            <button class="rightalign" onClick={this.newGame}>Create New Table</button>
             {welcome}
       </header>
       )

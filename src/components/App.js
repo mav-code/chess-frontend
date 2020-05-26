@@ -9,20 +9,27 @@ import {Route, Switch, withRouter} from 'react-router-dom'
 class App extends React.Component {
   state = {
     currentUser: null,
-    games: []
+    games: [],
+    loading: true
   }
 
   handleUpdateCurrentUser = user => {
     this.setState({
       currentUser: user
-    })}
+    })
+    if(this.state.loading){
+    this.setState({
+      loading: false
+    })
+  }}
 
     componentDidMount() {
       fetch(`http://localhost:3000/games/`)
         .then(r => r.json())
         .then(gamesArray => {
           this.setState({
-            games: gamesArray
+            games: gamesArray,
+            loading: false
           })
           console.log("in app cdm", gamesArray)
         })
@@ -34,7 +41,7 @@ class App extends React.Component {
     }
 
     handleJoinGame = (game) => {
-      if(game.whiteplayer){
+      if(game.whiteplayer && !game.blackplayer){
         fetch(`http://localhost:3000/games/${game.id}`, {
         method: "PATCH",
         body: JSON.stringify({
@@ -47,7 +54,7 @@ class App extends React.Component {
       })
       .then(response => response.json())
       .then(this.props.history.push(`/games/${game.id}`))
-      } else if (game.blackplayer){
+      } else if (game.blackplayer && !game.whiteplayer){
         fetch(`http://localhost:3000/games/${game.id}`, {
         method: "PATCH",
         body: JSON.stringify({
@@ -60,6 +67,10 @@ class App extends React.Component {
       })
       .then(response => response.json())
       .then(json => this.props.history.push(`/games/${game.id}`))
+      } else if (game.blackplayer && game.whiteplayer){
+        const full = document.getElementById(game.id).lastChild
+        full.style.color = "white"
+        setTimeout(() => {  full.style.color = "black" }, 200)
       }
     }
 
@@ -72,7 +83,7 @@ class App extends React.Component {
     <Header handleUpdateCurrentUser={this.handleUpdateCurrentUser} currentUser={this.state.currentUser}/>
     <main>
       <Switch>
-        <Route exact path='/' render={(routeProps) => <Lobby games={this.state.games} handleJoinGame={this.handleJoinGame} {...routeProps} />} />
+        <Route exact path='/' render={(routeProps) => <Lobby loading={this.state.loading} games={this.state.games} handleJoinGame={this.handleJoinGame} currentUser={this.state.currentUser} {...routeProps} />} />
         <Route exact path='/new' render={(routeProps) => <NewGameContainer currentUser={this.state.currentUser} games={this.state.games}{...routeProps} />} />
         <Route exact path='/signup' render={(routeProps) => <SignupForm handleUpdateCurrentUser={this.handleUpdateCurrentUser} {...routeProps} />} />
         <Route path='/games' render={(routeProps) => <GameContainer currentUser={this.state.currentUser} games={this.state.games} {...routeProps} />} />

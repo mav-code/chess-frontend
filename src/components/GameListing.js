@@ -22,9 +22,9 @@ class GameListing extends React.Component {
             players = `${this.props.game.blackplayer.username}`
         }
         return (
-            <tr class="listing" onClick={() => this.props.handleJoinGame(this.props.game)}>
-              <td>{this.props.game.name}</td>
-              <td>{players}</td>
+            <tr class="listing" id={this.props.game.id} onClick={() => this.props.handleJoinGame(this.props.game)}>
+              <td class="name">{this.props.game.name}</td>
+              <td class="players">{players}</td>
               <td>{this.props.game.created_at.substring(6,10)}, {this.props.game.created_at.substring(11,19)}</td>
               <td>{open}</td>
             </tr>

@@ -181,3 +181,7 @@ button:active {
     background: #F5F5F5;
     color : #C3C3C3;
 }
+
+tr:nth-child(even) {
+  background-color: #f2f2f2
+}

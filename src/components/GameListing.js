@@ -5,27 +5,29 @@ import {withRouter} from 'react-router-dom'
 
 class GameListing extends React.Component {
 
-    clicked = (event) => {
-        console.log("clicked the listing")
-    }
 
   
       render() {
-        console.log(this.props.game)
-        let player = ``
-        if(this.props.game.whiteplayer){
-            player = player.concat(this.props.game.whiteplayer.username)
+        console.log("created_at", this.props.game.created_at)
+        let players
+        let open = `Click to join!`
+        if(this.props.game.whiteplayer && this.props.game.blackplayer){
+            players = `${this.props.game.whiteplayer.username}, ${this.props.game.blackplayer.username}`
+            open = `full`
         }
-        if(this.props.game.blackplayer){
-            player = player.concat(this.props.game.blackplayer.username)
+        else if(this.props.game.whiteplayer){
+            players = `${this.props.game.whiteplayer.username}`
+        }
+        else if(this.props.game.blackplayer){
+            players = `${this.props.game.blackplayer.username}`
         }
         return (
-            <tbody class="listing" onClick={() => this.clicked()}>
+            <tr class="listing" onClick={() => this.props.handleJoinGame(this.props.game)}>
               <td>{this.props.game.name}</td>
-              <td>{player}</td>
-              <td>creation time</td>
-              
-            </tbody>
+              <td>{players}</td>
+              <td>{this.props.game.created_at.substring(6,10)}, {this.props.game.created_at.substring(11,19)}</td>
+              <td>{open}</td>
+            </tr>
             )
   }}
   

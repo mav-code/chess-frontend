@@ -23,11 +23,11 @@ componentDidMount(){
       })
 }
 
-toggleColor() {
+toggleColor = () => {
     const checkBox = document.getElementById("myCheck");
     const black = document.getElementById("black");
     const white = document.getElementById("white");
-    if (checkBox.checked == true){
+    if (checkBox.checked === true){
       black.style.display = "block";
       white.style.display = "none";
         this.setState({
@@ -45,15 +45,19 @@ toggleColor() {
   }
 
   onMovePiece = (piece, fromSquare, toSquare) => {
-    console.log(piece, fromSquare, toSquare)
-    const toDelete = piece.notation
-    const toAdd = piece.name + `@` + toSquare
-    const filtered = this.state.fen.filter(function(value, index, arr){ return value !== toDelete;})
-    filtered.push(toAdd)
-    console.log("filtered", filtered)
-    this.setState({
-        fen: filtered
-    })}
+    const newPieces = this.state.fen
+    .map((curr, index) => {
+      if (piece.index === index) {
+        return `${piece.name}@${toSquare}`
+      } else if (curr.indexOf(toSquare) === 2) {
+        return false
+      }
+      return curr
+    })
+    .filter(Boolean)
+
+  this.setState({fen: newPieces})
+}
 
     cancelTable= () => {
         console.log("this.props.games", this.props.games)

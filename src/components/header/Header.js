@@ -36,7 +36,6 @@ class Header extends React.Component {
             </Link>
             <button onClick={this.newGame}>Create New Table</button>
             {welcome}
-
       </header>
       )
     }

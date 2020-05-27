@@ -10,6 +10,7 @@
 * {
   margin: 0;
   padding: 0;
+  box-sizing: border-box;
 }
 
 a {
@@ -26,7 +27,6 @@ body,h1,h2,h3,input,hr {
   background-color: rgb(88, 88, 88);
   align-items: center;
   text-align: center;
-  /* font-family: "Avenir Next", Avenir, "Segoe UI", Roboto, "Helvetica Neue", sans-serif; */
 }
 
 h1 {letter-spacing: 6px}
@@ -39,21 +39,23 @@ code {
 
 
 
-/* NavBar */
 header {
   width: 100%;
-  height: 50px;
+  height: 40px;
   display: flex;
-  /* justify-content: space-between; */
   align-items: center;
-  /* padding: 0.75rem 8rem; */
   box-shadow: 1px 1px 2px -1px rgba(0,0,0,0.75);
   list-style-type: none;
-margin: 0;
-padding: 0;
-background-color: #333;
-color:  white;
-overflow:visible;
+  margin: 0;
+  padding: 0;
+  background-color: #333;
+  color:  white;
+  overflow:visible;
+}
+
+button:focus {
+  outline: none;
+  box-shadow: none;
 }
 
 button {
@@ -70,11 +72,17 @@ button {
   color:  white
 }
 
-button:focus,
+/* button:focus, */
 button:hover {
   outline: none;
   box-shadow: rgba(255, 255, 255, 0.18) 0px 1px 4px;
   background-color: #111;
+}
+
+.playerlabel{
+  text-align: left;
+  position: relative;
+  top: 30px
 }
 
 button:active {
@@ -146,27 +154,24 @@ button:active {
 
 .board {
   box-sizing: border-box;
-  position: relative;
-  overflow: hidden;
-  width: 40%;
+  width: 100%;
+  padding: 0.5rem;
 }
 
-/* The switch - the box around the slider */
+
 .switch {
   position: relative;
   display: inline-block;
   width: 60px;
   height: 34px;
   }
-  
-  /* Hide default HTML checkbox */
+
   .switch input {
   opacity: 0;
   width: 0;
   height: 0;
   }
   
-  /* The slider */
   .slider {
   position: absolute;
   cursor: pointer;
@@ -246,13 +251,15 @@ tr:hover {background-color: #7a7a7a;}
 
 #logo{
   position: relative;
-  top: 20px;
+  top: 25px;
 }
 
 .pagetitle{
   position: relative;
-  left: 82px;
-  bottom: 10px
+  left: 137px;
+  bottom: 17px;
+  font-size: 30px;
+
 }
 
 .pagetitle:hover{
@@ -282,8 +289,48 @@ table {
     left: 700px
   }
 
-  /* .signup{
-    position: absolute;
-    left: 1100px;
-    bottom: 370px;
-  } */
+ #tablename{
+  font-size: 16px;
+  width: 50%;	
+  box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  border: 1px solid #C2C2C2;
+  /* box-shadow: 1px 1px 4px #EBEBEB;
+  -moz-box-shadow: 1px 1px 4px #EBEBEB;
+  -webkit-box-shadow: 1px 1px 4px #EBEBEB; */
+  /* border-radius: 3px;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px; */
+  padding: 7px;
+  outline: none;
+  border: 1px solid rgb(255, 255, 255);
+  height:40px;
+  }
+
+  #tablename:disabled,
+  button[disabled]{
+    border: 1px solid #999999;
+    background-color: #cccccc;
+    color: #666666;
+  }
+
+  .gamesetup{
+    align-items: center;
+    text-align: center;
+  }
+
+  /* Create two equal columns that floats next to each other */
+.column {
+  float: left;
+  width: 50%;
+  padding: 10px;
+  height: 300px; /* Should be removed. Only for demonstration */
+}
+
+/* Clear floats after the columns */
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}

@@ -5,9 +5,15 @@ import LoginBlock from './LoginBlock.js'
 class Header extends React.Component {
 
 
-    newGame = (event) => {
-        this.props.history.push(`/new/`)
-    }
+    // newGame = (event) => {
+    //     if(this.props.currentUser){
+    //     this.props.history.push(`/new/`)
+    //     } else {
+    //       const warn = document.getElementById(warn)
+    //       warn.style.color = "white"
+    //       setTimeout(() => {  warn.style.color = "black" }, 200)
+    //     }
+    // }
 
     handleLogout = () => {
         fetch("http://localhost:3000/logout", {
@@ -24,7 +30,7 @@ class Header extends React.Component {
     render() {
         let welcome
         if(this.props.currentUser){
-            welcome = [<div id="right"> Welcome! Join or create a table <button class="rightalign" onClick={this.handleLogout}>Logout {this.props.currentUser.username}</button></div>]
+            welcome = [<div id="right"> Welcome!<button className="rightalign" onClick={this.handleLogout}>Logout {this.props.currentUser.username}</button></div>]
         } else {
             welcome = <LoginBlock handleUpdateCurrentUser={this.props.handleUpdateCurrentUser} currentUser={this.props.currentUser} />
         }
@@ -32,10 +38,10 @@ class Header extends React.Component {
       return (
         <header>
             <Link to="/">
-            <img id="logo" class="icon" src={process.env.PUBLIC_URL + '/stolenlogo.png'} />
-            <h4 class="pagetitle">Sandbox Chess</h4>
+            <img id="logo" className="icon" src={process.env.PUBLIC_URL + '/stolenlogo.png'} />
+            <h4 className="pagetitle">Sandbox Chess</h4>
             </Link>
-            <button class="rightalign" onClick={this.newGame}>Create New Table</button>
+            <button className="rightalign" onClick={this.props.newGame}>Create New Table</button>
             {welcome}
       </header>
       )

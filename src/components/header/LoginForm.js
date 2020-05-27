@@ -1,5 +1,5 @@
 import React from 'react'
-import { Link, withRouter } from 'react-router-dom'
+import {   withRouter } from 'react-router-dom'
 
 class LoginForm extends React.Component {
   state = {
@@ -43,7 +43,7 @@ class LoginForm extends React.Component {
       const { username, password } = this.state
 
       return (
-        <div class="rightalign" className="smallform">
+        <div className="rightalign smallform">
         <form onSubmit={this.handleSubmit}>
           <label>Username:</label><br/>
           <input type="text" name="username" onChange={this.handleInputChange} value={username} /><br/>

@@ -33,9 +33,9 @@ class LoginBlock extends React.Component {
       return (
             <>
               <Link to="/signup">
-              <button class="rightalign">Sign Up</button>
+              <button className="rightalign">Sign Up</button>
               </Link>
-              <button  class="rightalign" onClick={this.toggleLogin}>Log in</button>
+              <button  className="rightalign" onClick={this.toggleLogin}>Log in</button>
               <LoginForm handleUpdateCurrentUser={this.props.handleUpdateCurrentUser} />
             </>
 

@@ -1,9 +1,9 @@
 import React from 'react'
 import GameListing from './GameListing.js'
 import { withRouter } from "react-router"
-// import consumer from '../cable'
+import consumer from '../cable'
 
-// console.log("consumer", consumer)
+console.log("consumer", consumer)
 
 // consumer.subscriptions.create({
 //   channel: "LobbyChannel"
@@ -35,12 +35,12 @@ class Lobby extends React.Component {
           shouldSwitch = false;
     x = rows[i].getElementsByTagName("TD")[n];
           y = rows[i + 1].getElementsByTagName("TD")[n];
-          if (dir == "asc") {
+          if (dir === "asc") {
             if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
               shouldSwitch = true;
               break;
     }
-          } else if (dir == "desc") {
+          } else if (dir === "desc") {
             if (x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) {
               shouldSwitch = true;
               break;
@@ -52,7 +52,7 @@ class Lobby extends React.Component {
           switching = true;
     switchcount ++;
     } else {
-          if (switchcount == 0 && dir == "asc") {
+          if (switchcount === 0 && dir === "asc") {
             dir = "desc";
     switching = true;
         }
@@ -60,18 +60,33 @@ class Lobby extends React.Component {
   }}
   }
 
+  componentDidMount(){
+    consumer.subscriptions.create({
+      channel: "GamesChannel"
+    }, {
+      connected: () => console.log("connected to games feed"),
+      disconnected: () => console.log("disconnected"),
+      received: data => {
+        console.log("received data:", data)
+        this.props.handleAddGame(data)
+        }
+  
+      },
+    )
+  }
+
     render() {
-        console.log("in pc render", this.props.games)
+        console.log("in lobby render", this.props.games)
         console.log("currentUser", this.props.currentUser)
         let loading
         let message
         if(this.props.currentUser){
-          message = "Start or join a game!"
+          message = <p id="warn">Start or join a game!</p>
         } else {
-          message = "Log in to start or join a game!"
+          message = <p id="warn">Log in to start or join a game!</p>
         }
         if(this.props.loading){
-          loading = <h3 class="loading">loading...</h3>
+          loading = <h3 className="loading">loading...</h3>
         }
         return (
           <div className="listingcontainer">
@@ -83,8 +98,8 @@ class Lobby extends React.Component {
           <br/>
           <table id="table">
             <tr>
-              <th class="name" onClick={() => this.sortTable(0)}>Game Name</th>
-              <th class="players" onClick={() => this.sortTable(1)}>Players</th>
+              <th className="name" onClick={() => this.sortTable(0)}>Game Name</th>
+              <th className="players" onClick={() => this.sortTable(1)}>Players</th>
               <th onClick={() => this.sortTable(2)}>Created at</th>
               <th onClick={() => this.sortTable(3)}>Join</th>
             </tr>

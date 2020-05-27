@@ -17,7 +17,7 @@ class GameContainer extends React.Component {
         whiteplayer_id: ``,
         blackplayer_id: ``,
         started: true,
-        id: 0
+        id: 0,
     }
 
     componentDidUpdate(){
@@ -25,11 +25,11 @@ class GameContainer extends React.Component {
             channel: "LobbyChannel",
             id: this.state.id
           }, {
-            connected: () => console.log("connected"),
+            connected: () => console.log("connected to game feed"),
             disconnected: () => console.log("disconnected"),
             received: data => {
               console.log("received data:", data)
-              let fixedFen = data
+              let fixedFen = data.fen
                 let fix2 = fixedFen.replace("[", "").replace("]", "").replace(/,/g, "").replace(/"/g, "")
                 console.log("fix2", fix2)
                 let realFixedFen
@@ -76,11 +76,38 @@ class GameContainer extends React.Component {
         console.log("state", this.state)
     }
 
-    toggleColor = () => {
-            this.setState({
-              whiteplayer_id: this.state.blackplayer_id,
-              blackplayer_id: this.state.whiteplayer_id
-      })}
+    // toggleColor = () => {
+    //   fetch(`http://localhost:3000/games/${this.state.id}`, {
+    //     method: "PATCH",
+    //     body: JSON.stringify({
+    //       whiteplayer_id: this.state.blackplayer_id,
+    //       blackplayer_id: this.state.whiteplayer_id
+    //     }),
+    //     credentials: "include",
+    //     headers: {
+    //       "Content-type": "application/json"
+    //     }
+    //   })
+    //   .then(response => response.json())
+    //   .then((newGameState) => {
+    //     console.log("newGameState", newGameState)
+    //     let fix2 = newGameState.fen.replace("[", "").replace("]", "").replace(/,/g, "").replace(/"/g, "")
+    //     console.log("fix2", fix2)
+    //     let realFixedFen
+    //     if(fix2.includes(" ")){realFixedFen = fix2.split(' ')
+    //     } else {realFixedFen = this.splitN(fix2, 4)} 
+    //     console.log("realFixedFen", realFixedFen)
+    //     console.log(typeof realFixedFen)
+    //       this.setState({
+    //         name: newGameState.name,
+    //         pgn: newGameState.pgn,
+    //         fen: realFixedFen,
+    //         whiteplayer_id: newGameState.whiteplayer_id,
+    //         blackplayer_id: newGameState.blackplayer_id,
+    //         started: true,
+    //         id: newGameState.id
+    //       })
+    //     })}
     
       onMovePiece = (piece, fromSquare, toSquare) => {
         const thisGame = this.props.games.filter(game => game.id === parseInt(this.props.location.pathname.match(/\d+/)))[0]
@@ -108,22 +135,57 @@ class GameContainer extends React.Component {
           "Content-type": "application/json"
         }
       })
-      .then(response => response.json())
-
-    
+      // .then(response => response.json())
     }
+
+    reset = () => {
+      this.setState({
+        fen: ["R@a1", "P@a2", "p@a7", "r@a8", "N@b1", "P@b2", "p@b7", "n@b8", "B@c1", "P@c2", "p@c7", "b@c8", "Q@d1", "P@d2", "p@d7", "q@d8", "K@e1", "P@e2", "p@e7", "k@e8", "B@f1", "P@f2", "p@f7", "b@f8", "N@g1", "P@g2", "p@g7", "n@g8", "R@h1", "P@h2", "p@h7", "r@h8"]
+      })
+      console.log("id", this.state.id)
+      fetch(`http://localhost:3000/games/${this.state.id}`, {
+        method: "PATCH",
+        body: JSON.stringify({
+          fen: `["R@a1", "P@a2", "p@a7", "r@a8", "N@b1", "P@b2", "p@b7", "n@b8", "B@c1", "P@c2", "p@c7", "b@c8", "Q@d1", "P@d2", "p@d7", "q@d8", "K@e1", "P@e2", "p@e7", "k@e8", "B@f1", "P@f2", "p@f7", "b@f8", "N@g1", "P@g2", "p@g7", "n@g8", "R@h1", "P@h2", "p@h7", "r@h8"]`
+        }),
+        credentials: "include",
+        headers: {
+          "Content-type": "application/json"
+        }
+      })
+      .then(response => response.json())
+    }
+
 
   
     render() {
+      const thisGame = this.props.games.filter(game => game.id === parseInt(this.props.location.pathname.match(/\d+/)))[0]
+      let names
+      if(thisGame.blackplayer && thisGame.whiteplayer){
+        names = `Game between ${thisGame.blackplayer.username} and ${thisGame.whiteplayer.username}`
+      }
         return (
-            <div class="game">
-              <Board onMovePiece={this.onMovePiece} pieces={this.state.fen}/>
-              <label class="switch">
-                  <input id="myCheck" type="checkbox" onClick={this.toggleColor}/>
-                  <span class="slider"></span>
-              </label>
-              <p id="black">Switch sides</p>
+            <div className="game">
+              <div className="row">
+                <div className="column">
+                  <Board onMovePiece={this.onMovePiece} pieces={this.state.fen}/>
+                </div>
+                <div className="column">
+                <br/><br/><br/><br/><br/><br/>
+                <h2>{names}</h2>
+                {/* <div className="playerlabel">
+                Black: {thisGame.blackplayer.username}
+                </div> */}
+                <br/><br/>
+                  
+                    {/* <button id="switchsides" onClick={this.toggleColor}> Switch Sides </button> */}
+                  <button id="gamereset" onClick={this.reset}>Reset the board</button>
+                  {/* <div className="playerlabel">
+                  White: {thisGame.whiteplayer.username}
+                  </div> */}
+                </div>
               </div>
+            </div>
             
           )
         }

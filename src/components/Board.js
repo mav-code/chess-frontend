@@ -8,7 +8,7 @@ class Board extends React.Component {
 
     render() {
         return (
-          <div class="board">
+          <div className="board">
             <Chess pieces={this.props.pieces} onMovePiece={this.props.onMovePiece}/>
           </div>
           

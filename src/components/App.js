@@ -114,14 +114,15 @@ class App extends React.Component {
       .then(response => response.json())
       .then(json => this.props.history.push(`/games/${game.id}`))
       } else if (game.blackplayer && game.whiteplayer && this.state.currentUser){
+        console.log("in last elsif")
         if((game.whiteplayer.id === this.state.currentUser.id) || (game.blackplayer.id === this.state.currentUser.id)){
           this.props.history.push(`/games/${game.id}`)
-        }} else {
+        } else {
           console.log("last else")
         const full = document.getElementById(game.id).lastChild
         full.style.color = "white"
         setTimeout(() => {  full.style.color = "black" }, 200)
-      }}
+      }}}
 
 
 

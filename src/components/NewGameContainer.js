@@ -65,9 +65,10 @@ toggleColor = () => {
     cancelTable= () => {
         console.log("this.props.games", this.props.games)
         console.log("this.props.currentUser", this.props.currentUser)
-        const thisGame = this.props.currentUser.games.filter(game => !(game.whitePlayer && game.blackPlayer))
-        console.log("in cancel", thisGame)
-        thisGame.forEach((game) =>
+        const myGames = this.props.games.filter(game => !(game.whitePlayer && game.blackPlayer) && ((game.whiteplayer_id === this.props.currentUser.id) || (game.blackplayer_id === this.props.currentUser.id)))
+        // const thisGame = this.props.currentUser.games.filter(game => !(game.whitePlayer && game.blackPlayer))
+        console.log("in cancel", myGames)
+        myGames.forEach((game) =>
             {fetch(`http://localhost:3000/games/` + game.id, {
                 method: "DELETE"
             })
@@ -81,15 +82,16 @@ toggleColor = () => {
             }
 
             this.props.handleDeleteGame(game)
-            document.getElementById("create").disabled = false
-            document.getElementById("myCheck").disabled = false
-            document.getElementById("tablename").disabled = false
-            document.getElementById("newreset").disabled = false
             // return response.json();
     
     })
     // .then(json => {return json})
-    })}
+    })
+    document.getElementById("create").disabled = false
+    document.getElementById("myCheck").disabled = false
+    document.getElementById("tablename").disabled = false
+    document.getElementById("newreset").disabled = false
+  }
     
     
     createTable = () => {

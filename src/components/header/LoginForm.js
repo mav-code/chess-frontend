@@ -36,6 +36,7 @@ class LoginForm extends React.Component {
       })
       .then(user => {
         this.props.handleUpdateCurrentUser(user)
+        this.props.history.push(`/`)
         })
   }
   
@@ -43,7 +44,7 @@ class LoginForm extends React.Component {
       const { username, password } = this.state
 
       return (
-        <div className="rightalign smallform">
+        <div className="smallform">
         <form onSubmit={this.handleSubmit}>
           <label>Username:</label><br/>
           <input type="text" name="username" onChange={this.handleInputChange} value={username} /><br/>

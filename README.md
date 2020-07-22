@@ -1,6 +1,8 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This is the React frontend of Sandbox Chess. It was bootstrapped with [Create React App](https://github.com/facebook/create-react-app) and uses the [react-chess](https://github.com/rexxars/react-chess) board and react-router. The backend is [here](https://github.com/mav-code/chess-backend).
 
-## Available Scripts
+Below is the Create React App command documentation.
+
+Available Scripts
 
 In the project directory, you can run:
 
@@ -23,7 +25,7 @@ Builds the app for production to the `build` folder.<br />
 It correctly bundles React in production mode and optimizes the build for the best performance.
 
 The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
+Your app is ##ready to be deployed!
 
 See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 

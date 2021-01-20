@@ -85,7 +85,11 @@ class App extends React.Component {
     handleJoinGame = (game) => {
       console.log("this.state.currentUser", this.state.currentUser)
       console.log("players", game.whiteplayer, game.blackplayer)
-      if(game.whiteplayer && !game.blackplayer){
+      if(!this.state.currentUser){
+        const logintext = document.getElementById("warn")
+        logintext.style.color = "white"
+        setTimeout(() => {  logintext.style.color = "black" }, 200)
+      }else if(game.whiteplayer && !game.blackplayer){
         console.log("yes white no black")
         fetch(`http://localhost:3000/games/${game.id}`, {
         method: "PATCH",

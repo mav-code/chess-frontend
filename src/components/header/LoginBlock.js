@@ -29,35 +29,14 @@ class LoginBlock extends React.Component {
     }
 
     render() {
-      
       return (
             <>
               <Link to="/signup">
-              <button className="rightalign">Sign Up</button>
+                <button className="rightalign">Sign Up</button>
               </Link>
-              <button  className="rightalign" onClick={this.toggleLogin}>Log in</button>
+                <button  className="rightalign" onClick={this.toggleLogin}>Log in</button>
               <LoginForm handleUpdateCurrentUser={this.props.handleUpdateCurrentUser} />
             </>
-
-        /* <div className="actions">
-          {this.props.currentUser ? (
-            <>
-            <Link to='/profile'>
-              <button>Profile</button>
-            </Link>
-            <button onClick={this.handleLogout}>Logout {this.props.currentUser.username}</button>
-            </>
-          ) : (
-              <>
-                <Link to="/login">
-                  <button>Login</button>
-                </Link>
-                <Link to="/signup">
-                  <button>Sign Up</button>
-                </Link>
-              </>
-            )}
-        </div> */
       )
     }
 }
